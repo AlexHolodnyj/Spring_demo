@@ -1,10 +1,8 @@
 package com.example.demo.Goods;
 
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
 @Entity
@@ -36,8 +34,6 @@ public class Goods {
         this.priceOfGoods = priceOfGoods;
         this.expiredDateOfGoods = expiredDateOfGoods;
         this.amountsLeft = amountsLeft;
-//        this.isDueBy = (int) ChronoUnit.DAYS.between(LocalDate.now(), this.expiredDateOfGoods);
-//        this.isDueBy = (int) ChronoUnit.DAYS.between(LocalDate.now(), this.expiredDateOfGoods);
     }
 
     public String getNameOfGoods() {
@@ -73,7 +69,7 @@ public class Goods {
     }
 
     public int getIsDueBy() {
-        return Period.between(LocalDate.now(), expiredDateOfGoods).getDays();
+        return (int) ChronoUnit.DAYS.between(LocalDate.now(), this.expiredDateOfGoods);
     }
 
     public void setIsDueBy(int isDueBy) {
