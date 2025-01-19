@@ -1,13 +1,31 @@
 package com.example.demo.Goods;
 
+import jakarta.persistence.*;
+import org.springframework.cglib.core.Local;
+
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.temporal.ChronoUnit;
 
+@Entity
+@Table
 public class Goods {
+    @Id
+    @SequenceGenerator(
+            name = "goods_sequence",
+            sequenceName = "goods_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "goods_sequence"
+    )
+    private Long id;
     private String nameOfGoods;
     private float priceOfGoods;
     private LocalDate expiredDateOfGoods;
     private int amountsLeft;
+    @Transient
     private int isDueBy;
 
     public Goods() {
@@ -18,7 +36,8 @@ public class Goods {
         this.priceOfGoods = priceOfGoods;
         this.expiredDateOfGoods = expiredDateOfGoods;
         this.amountsLeft = amountsLeft;
-        this.isDueBy = (int) ChronoUnit.DAYS.between(LocalDate.now(), this.expiredDateOfGoods);
+//        this.isDueBy = (int) ChronoUnit.DAYS.between(LocalDate.now(), this.expiredDateOfGoods);
+//        this.isDueBy = (int) ChronoUnit.DAYS.between(LocalDate.now(), this.expiredDateOfGoods);
     }
 
     public String getNameOfGoods() {
@@ -54,7 +73,7 @@ public class Goods {
     }
 
     public int getIsDueBy() {
-        return isDueBy;
+        return Period.between(LocalDate.now(), expiredDateOfGoods).getDays();
     }
 
     public void setIsDueBy(int isDueBy) {
