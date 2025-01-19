@@ -24,4 +24,9 @@ public class GoodsController {
     public void addNewGoods(@RequestBody Goods goods) {
         goodsService.addNewGoods(goods);
     }
+
+    @DeleteMapping(path = "{goodsId}")
+    public void deleteGoodsById(@PathVariable("goodsId") Long goodsId) {
+        goodsService.deleteGoodsById(goodsId);
+    }
 }

@@ -23,4 +23,12 @@ public class GoodsService {
     public void addNewGoods(Goods goods) {
         goodsRepository.save(goods);
     }
+
+    public void deleteGoodsById(Long goodsId) {
+        boolean exists = goodsRepository.existsById(goodsId);
+        if (!exists) {
+            throw new IllegalStateException("Goods with ID: " + goodsId + " not found");
+        }
+        goodsRepository.deleteById(goodsId);
+    }
 }
